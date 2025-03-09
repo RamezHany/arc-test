@@ -1,0 +1,10 @@
+---
+description: always use @codebase
+globs: 
+alwaysApply: false
+---
+
+# Your rule content
+always use @codebase
+- You can @ files here
+- You can use markdown but dont have to

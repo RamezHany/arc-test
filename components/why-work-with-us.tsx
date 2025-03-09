@@ -75,14 +75,14 @@ export function WhyWorkWithUs() {
       />
 
       <div className="container mx-auto px-4 relative">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 lg:gap-24 items-center">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
             className="z-20"
           >
-            <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-10 sm:mb-14">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-8 sm:mb-10 md:mb-14">
               <span className="relative inline-block">
                 WHY WORK
                 <motion.span 
@@ -95,17 +95,17 @@ export function WhyWorkWithUs() {
               <br />
               <span className="text-[#FF6B00]">WITH US</span>
             </h2>
-            <ul className="space-y-6 sm:space-y-8 pl-2">
+            <ul className="space-y-5 sm:space-y-6 md:space-y-8 pl-2">
               {points.map((point, index) => (
                 <motion.li
                   key={index}
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="flex items-start gap-5"
+                  className="flex items-start gap-4 sm:gap-5"
                 >
                   <span className="w-3 h-3 mt-2 rounded-full bg-[#FF6B00]" />
-                  <span className="text-base sm:text-lg font-light">{point}</span>
+                  <span className="text-sm sm:text-base md:text-lg font-light">{point}</span>
                 </motion.li>
               ))}
             </ul>
@@ -113,11 +113,23 @@ export function WhyWorkWithUs() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="mt-12 sm:mt-16"
+              className="mt-8 sm:mt-10 md:mt-12 lg:mt-16"
             >
               <Link
-                href="#our-works"
-                className="group inline-flex items-center gap-3 bg-[#FF6B00] text-white px-5 sm:px-7 py-3 sm:py-4 rounded-full hover:bg-[#FF8A00] transition-colors duration-300"
+                href="#portfolio"
+                className="group inline-flex items-center gap-3 bg-[#FF6B00] text-white px-5 py-2.5 text-base sm:px-6 sm:py-3 sm:text-lg rounded-full hover:bg-[#FF8A00] transition-colors duration-300"
+                onClick={(e) => {
+                  e.preventDefault();
+                  const section = document.getElementById('portfolio');
+                  if (section) {
+                    const navbarHeight = 80;
+                    const sectionTop = section.getBoundingClientRect().top + window.scrollY - navbarHeight;
+                    window.scrollTo({
+                      top: sectionTop,
+                      behavior: 'smooth'
+                    });
+                  }
+                }}
               >
                 <span className="font-bold">OUR WORKS</span>
                 <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-2" />
@@ -129,7 +141,7 @@ export function WhyWorkWithUs() {
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
-            className="relative z-20"
+            className="relative z-20 mt-10 md:mt-0"
           >
             {/* Orange decorative frame around image */}
             <motion.div 
@@ -141,7 +153,7 @@ export function WhyWorkWithUs() {
             
             {/* Larger image with hover effect */}
             <motion.div 
-              className="relative h-[450px] sm:h-[550px] md:h-[650px] overflow-hidden rounded-lg"
+              className="relative h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden rounded-lg"
               whileHover={{ scale: 1.03 }}
               transition={{ duration: 0.3 }}
             >
@@ -151,11 +163,13 @@ export function WhyWorkWithUs() {
                 alt="Team collaboration in modern office"
                 fill
                 className="object-cover object-center"
+                sizes="(max-width: 640px) 100vw, (max-width: 768px) 80vw, (max-width: 1024px) 50vw, 40vw"
+                priority
               />
               
               {/* Floating orange accent on the image */}
               <motion.div 
-                className="absolute top-10 right-10 w-20 h-20 rounded-full border-4 border-[#FF6B00] z-20"
+                className="absolute top-10 right-10 w-16 h-16 sm:w-20 sm:h-20 rounded-full border-4 border-[#FF6B00] z-20"
                 animate={{ 
                   y: [0, 10, 0],
                   rotate: [0, 10, 0]

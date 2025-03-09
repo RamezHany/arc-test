@@ -65,31 +65,66 @@ export function GlimpseOfWork() {
   
   return (
     <section ref={sectionRef} className="py-20 md:py-32 bg-black text-white relative overflow-hidden">
-      {/* Background elements */}
+      {/* Background elements - replaced blur with patterns */}
       <div className="absolute inset-0 overflow-hidden">
+        {/* Grid pattern instead of blur */}
+        <div className="absolute top-0 left-0 w-full h-full">
+          <div className="absolute top-0 left-0 w-full h-full grid grid-cols-12 grid-rows-12 opacity-10">
+            {Array.from({ length: 12 }).map((_, rowIndex) => (
+              Array.from({ length: 12 }).map((_, colIndex) => (
+                <motion.div 
+                  key={`${rowIndex}-${colIndex}`}
+                  className="border border-[#FF6B00]/30"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{ 
+                    duration: 0.5, 
+                    delay: (rowIndex + colIndex) * 0.02 
+                  }}
+                />
+              ))
+            ))}
+          </div>
+        </div>
+        
+        {/* Animated diagonal lines */}
         <motion.div 
-          className="absolute -top-20 -left-20 w-96 h-96 rounded-full bg-[#FF6B00]/10 blur-[100px]"
-          animate={{ 
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{ 
-            duration: 8, 
-            repeat: Infinity,
-            ease: "easeInOut" 
+          className="absolute top-0 left-0 w-full h-[1px] bg-[#FF6B00]/20 origin-left"
+          style={{ 
+            rotate: -35,
+            y: y1
           }}
         />
         <motion.div 
-          className="absolute -bottom-20 -right-20 w-96 h-96 rounded-full bg-[#FF6B00]/10 blur-[100px]"
+          className="absolute bottom-0 right-0 w-full h-[1px] bg-[#FF6B00]/20 origin-right"
+          style={{ 
+            rotate: -35,
+            y: y2
+          }}
+        />
+        
+        {/* Animated shapes */}
+        <motion.div 
+          className="absolute top-[20%] left-[10%] w-40 h-40 border border-[#FF6B00]/30"
           animate={{ 
-            scale: [1.2, 1, 1.2],
-            opacity: [0.5, 0.3, 0.5],
+            rotate: [0, 180, 0],
           }}
           transition={{ 
-            duration: 8, 
+            duration: 20, 
             repeat: Infinity,
-            ease: "easeInOut",
-            delay: 4
+            ease: "linear" 
+          }}
+        />
+        <motion.div 
+          className="absolute bottom-[20%] right-[10%] w-40 h-40 border border-[#FF6B00]/30 rounded-full"
+          animate={{ 
+            scale: [1, 1.2, 1],
+            x: [0, 30, 0],
+          }}
+          transition={{ 
+            duration: 15, 
+            repeat: Infinity,
+            ease: "easeInOut" 
           }}
         />
       </div>
@@ -115,7 +150,7 @@ export function GlimpseOfWork() {
                 />
               </span>
             </h2>
-            <p className="text-xl text-gray-300 max-w-xl">
+            <p className="text-xl text-gray-300 max-w-xl font-light">
               Transforming brands through strategic creativity and innovative digital solutions.
             </p>
           </motion.div>
@@ -128,7 +163,7 @@ export function GlimpseOfWork() {
           >
             <Link
               href="#case-studies"
-              className="group flex items-center gap-3 bg-white/5 hover:bg-white/10 backdrop-blur-sm border border-white/10 text-white px-6 py-3 rounded-full transition-all duration-300"
+              className="group flex items-center gap-3 bg-black border border-[#FF6B00] hover:bg-[#FF6B00]/10 text-white px-6 py-3 rounded-full transition-all duration-300"
             >
               <span className="font-medium">VIEW ALL PROJECTS</span>
               <span className="w-8 h-8 rounded-full bg-[#FF6B00] flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1">
@@ -169,6 +204,14 @@ export function GlimpseOfWork() {
                 className={`group cursor-pointer ${colSpan} ${rowSpan}`}
               >
                 <div className="relative overflow-hidden rounded-2xl h-full">
+                  {/* Border animation */}
+                  <motion.div 
+                    className="absolute -inset-1 border border-white/0 z-20 rounded-2xl pointer-events-none"
+                    initial={{ borderColor: "rgba(255,255,255,0)" }}
+                    whileHover={{ borderColor: work.color }}
+                    transition={{ duration: 0.3 }}
+                  />
+                  
                   <motion.div
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.5, ease: "easeOut" }}
@@ -185,18 +228,26 @@ export function GlimpseOfWork() {
                     
                     {/* Custom gradient overlay with work-specific color */}
                     <div 
-                      className="absolute inset-0 opacity-90 mix-blend-multiply"
+                      className="absolute inset-0 opacity-80 mix-blend-multiply"
                       style={{ 
-                        background: `linear-gradient(to top, ${work.color}99, transparent)`,
+                        background: `linear-gradient(to top, ${work.color}, transparent)`,
                       }}
                     ></div>
+                    
+                    {/* Diagonal line accent */}
+                    <motion.div 
+                      className="absolute top-0 left-0 w-full h-[1px] bg-white/20 origin-left z-10"
+                      initial={{ scaleX: 0, rotate: -35 }}
+                      whileInView={{ scaleX: 1 }}
+                      transition={{ duration: 0.8, delay: 0.2 + index * 0.1 }}
+                    />
                     
                     {/* Content overlay */}
                     <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
                       {/* Category tag */}
                       <div 
-                        className="inline-block mb-4 px-3 py-1 rounded-full text-xs font-medium text-white backdrop-blur-sm w-fit"
-                        style={{ backgroundColor: `${work.color}99` }}
+                        className="inline-block mb-4 px-3 py-1 rounded-full text-xs font-medium text-white backdrop-blur-sm w-fit border border-white/20"
+                        style={{ backgroundColor: `${work.color}90` }}
                       >
                         {work.category}
                       </div>
@@ -208,7 +259,7 @@ export function GlimpseOfWork() {
                       
                       {/* Description with reveal animation */}
                       <div className="overflow-hidden h-0 group-hover:h-auto transition-all duration-500">
-                        <p className="text-white/90 mb-4 max-w-md opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                        <p className="text-white/90 mb-4 max-w-md opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 font-light">
                           {work.description}
                         </p>
                         
@@ -219,13 +270,22 @@ export function GlimpseOfWork() {
                         >
                           Explore Case Study
                           <span 
-                            className="w-6 h-6 rounded-full flex items-center justify-center"
+                            className="w-6 h-6 rounded-full flex items-center justify-center border border-white/20"
                             style={{ backgroundColor: work.color }}
                           >
                             <ArrowRight className="w-3 h-3" />
                           </span>
                         </motion.div>
                       </div>
+                      
+                      {/* Corner accent */}
+                      <motion.div 
+                        className="absolute bottom-0 right-0 w-0 h-0 border-b-[40px] border-r-[40px] border-b-transparent z-10"
+                        style={{ borderRightColor: work.color }}
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+                      />
                     </div>
                   </motion.div>
                 </div>
@@ -243,7 +303,7 @@ export function GlimpseOfWork() {
         >
           <Link
             href="#case-studies"
-            className="group flex items-center gap-3 bg-white/5 hover:bg-white/10 backdrop-blur-sm border border-white/10 text-white px-6 py-3 rounded-full transition-all duration-300"
+            className="group flex items-center gap-3 bg-black border border-[#FF6B00] hover:bg-[#FF6B00]/10 text-white px-6 py-3 rounded-full transition-all duration-300"
           >
             <span className="font-medium">VIEW ALL PROJECTS</span>
             <span className="w-8 h-8 rounded-full bg-[#FF6B00] flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1">
